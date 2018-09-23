@@ -1,4 +1,5 @@
 version: '3'
+
 services:
   php:
     image: oswald/docker-training:latest
@@ -22,6 +23,7 @@ services:
     networks:
       - front
       - back
+
   visualizer:
     image: dockersamples/visualizer:stable
     ports:
@@ -33,12 +35,13 @@ services:
         constraints: [node.role == manager]
     networks:
       - front
+
   db:
     image: mariadb:10
     ports:
       - 3306:3306
     volumes:
-      - "./data/mysql:/var/lib/mysql"
+      - "mysqldata:/var/lib/mysql"
     environment:
       - MYSQL_ROOT_PASSWORD=password
     deploy:
@@ -46,17 +49,25 @@ services:
         constraints: [node.role == manager]
     networks:
       - back
+
   redis:
     image: redis
     ports:
       - "6379:6379"
     volumes:
-      - ./data/redis:/data
+      - "redisdata:/data"
     deploy:
       placement:
         constraints: [node.role == manager]
     networks:
       - front
+
 networks:
   front: 
   back:
+
+volumes:
+  mysqldata:
+    driver: local
+  redisdata:
+    driver: local

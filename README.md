@@ -1,30 +1,12 @@
-# docker-training
+<a href="http://continuous.lu">
+  <img src="https://app.continuousphp.com/assets/logos/continuousphp.svg" alt="ContinuousPHP" width="250px" align="right"/>
+</a>
 
-# Running docker-compose
+<p align="left">
+    Continuous S.A. We promote Agile and DevOps best practices to accelerate your digital transformation
+</p>
 
-```bash
-docker-compose up
-```
+# Docker Training Center
 
-# Stopping and starting docker-compose
-
-```bash
-docker-compose stop
-```
-
-```bash
-docker-compose start
-```
-
-# Shutting down docker-compose
-
-```bash
-docker-compose down
-```
-
-# Getting logs
-
-```bash
-docker-compose logs --tail=10 -f
-```
+This repository contains 4 modules with different exercises to be able to cover almost all the things you can do with Docker solution.
 
