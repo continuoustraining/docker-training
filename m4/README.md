@@ -6,7 +6,7 @@
     Continuous S.A. We promote Agile and DevOps best practices to accelerate your digital transformation
 </p>
 
-# Docker Training Center - Module 3
+# Docker Training Center - Module 4
 
 The four module of the docker training series will deep dive on the usage of docker stack and swarm cluster using `docker-machine`
 
