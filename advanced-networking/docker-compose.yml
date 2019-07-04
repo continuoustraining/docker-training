@@ -1,0 +1,78 @@
+version: '3.5'
+
+x-logging:
+  &default-logging
+  options:
+    max-size: '12m'
+    max-file: '5'
+  driver: json-file
+x-logging:
+  &ci-logging
+  options:
+   max-size: '20m'
+   max-file: '42'
+  driver: json-file
+
+services:
+
+  proxy:
+    image: nginx:latest
+    volumes:
+      - ./proxy/nginx-proxy.conf:/etc/nginx/nginx.conf
+    ports:
+      - "80:80"
+      - "8080:8080"
+    depends_on:
+      - app
+      - jenkins
+    networks:
+      frontend:
+    logging: *default-logging
+
+  jenkins:
+    build: ./jenkins/
+    volumes:
+      - ./jenkins/jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 8080
+      - 50000
+    networks:
+      frontend:
+      middle:
+    logging: *ci-logging
+
+  app:
+      #build: ./app/
+    image: rschumacher13/demo:5
+    ports:
+      - 80
+      - 3000
+    depends_on:
+      - db
+    networks:
+      frontend:
+      middle:
+    env_file:
+      - ./app/docker/app-variables.env
+    logging: *default-logging
+    command: /bin/bash -c "nginx -g 'daemon on;' && rails server -b 0.0.0.0"
+
+  db:
+   image: postgres:latest
+   volumes:
+     - ./db/db:/var/lib/postgresql/data
+   networks:
+     backend:
+     middle:
+       aliases:
+         - pgsql_rulez
+   env_file:
+     - ./db/database-variables.env
+   logging: *default-logging
+
+networks:
+  frontend:
+  middle:
+  backend:
+
