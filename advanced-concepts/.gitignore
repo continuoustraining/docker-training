@@ -1,0 +1,3 @@
+./db/db/*
+./jenkins/jenkins_home/*
+./src

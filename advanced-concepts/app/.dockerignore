@@ -1,0 +1,8 @@
+./src/.git*
+./src/db/*.sqlite3
+./src/db/*.sqlite3-journal
+./src/log/*
+./src/tmp/*
+Dockerfile
+./src/README.rdoc
+./docker/*
