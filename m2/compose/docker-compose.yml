@@ -10,8 +10,6 @@ services:
       - .:/var/app:rw
     depends_on:
       - db
-    links:
-      - db
     environment:
       - MYSQL_ADDON_DB=my_database
       - MYSQL_ADDON_HOST=db
