@@ -54,20 +54,24 @@ services:
     volumes:
       - ./app/src:/myapp
       - ./app/docker/database.yml:/myapp/config/database.yml
+    environment:
+      - DB_PASSWORD=postgres
     env_file:
       - ./app/docker/app-variables.env
     logging: *default-logging
     command: bash -c "rm -f /myapp/tmp/pids/server.pid && rails server -p 3000 -b '0.0.0.0'"
 
   db:
-   image: postgres:latest
-   volumes:
-     - ./db/db:/var/lib/postgresql/data
+   image: postgres
    networks:
      backend:
      middle:
        aliases:
          - pgsql_rulez
+   volumes:
+     - ./db/db:/var/lib/postgresql/data
+   environment:
+     - POSTGRES_PASSWORD=postgres
    env_file:
      - ./db/database-variables.env
    logging: *default-logging
